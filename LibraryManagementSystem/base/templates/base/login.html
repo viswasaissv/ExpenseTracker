@@ -1,0 +1,11 @@
+{% extends 'base/main.html' %} 
+{% block content %}
+<h1>Login</h1>
+<h4>(login is required to perform any operations on a book)</h4>
+<form method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Login">
+</form>
+<p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+{% endblock content %}

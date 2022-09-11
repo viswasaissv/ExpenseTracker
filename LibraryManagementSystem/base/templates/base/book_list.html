@@ -1,0 +1,68 @@
+{% extends 'base/main.html' %} 
+{% block content %} 
+
+{% if request.user.is_authenticated %}
+<div class="header-bar">
+    <div><h1>Hello {{request.user}}</h1>
+    </div></div>
+</div>
+
+
+<a href="{% url 'logout' %}">Logout</a>
+{% else %}
+<div class="header-bar">
+    <div><h1>Hello Student</h1>
+    </div></div>
+</div>
+<a href="{% url 'login' %}">Login</a>
+{% endif %}
+<hr>
+<h1>Library</h1>
+<h4>You need to login to perform any operation in Library</h4>
+<a href="{% url 'book-create' %} ">Add Book</a>
+<div id="search-add-wrapper">
+    <form method="GET" style="display: flex;">
+    <input type="text" name='search-area' value="{{search_input}}">
+    <input type="submit" value='Search'>
+</form>
+
+    </div>
+    <div id="booklist" class="book-items-wrapper">
+        {% for book in books %}
+        <div class="book-wrapper" data-position="{{book.pk}}">
+            <div class="book-title">
+                <a href="{% url 'book' book.id %}">{{book}}</a> 
+            
+            </div>
+            <div class="book-controls">
+                <span><a class="edit-link" href="{% url 'book-update' book.id %}">Edit</a></span>
+               <span> <a class="delete-link" href="{% url 'book-delete' book.id %}">Delete</a></span>
+                
+            </div>
+        </div>
+        {% empty %}
+    <div style="text-align: center; padding-bottom: 10px; line-height: 1em;">
+        <h3>No new books are added.</h3>
+        <h3>Add a <a style="text-decoration: none; color: #e53935;" href="{% url 'book-create' %}">New book</a> ! </h3>
+    </div>
+    {% endfor %}
+</div>
+<!--<table>
+    <tr>
+        <th>Item</th>
+    </tr>
+    {% for book in object_list %}
+    <tr>
+        <td>{{book.title}}</td>
+        <td><a href="{% url 'book' book.id %}">View</a></td>
+        <td><a href="{% url 'book-update' book.id %}">Edit</a></td>
+        <td><a href="{% url 'book-delete' book.id %}">Delete</a></td>
+        
+    </tr>
+    {% empty %}
+
+    <h3>No books in the list</h3>
+    {% endfor %}
+
+</table>-->
+{% endblock content %}
